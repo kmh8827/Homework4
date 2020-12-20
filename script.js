@@ -10,14 +10,14 @@ var questions = [];
     "JSON.stringify()"
     ];
     var question2 = [
-    "What will the array.length(fruits) return given fruits[“apple”,”banana”,”orange”,”pear”];?",
+    "What will the array.length(fruits) return given fruits['apple','banana','orange','pear'];?",
     "4",
     "3",
     "5",
     "1"
     ];
     var question3 = [
-    "What will array.push(“pumpkin”) do to the array vegetables[“potato”];?",
+    "What will array.push('pumpkin') do to the array vegetables['potato'];?",
     "['potato','pumpkin'];",
     "['potato pumpkin'];",
     "['pumpkin','potato']",
@@ -55,6 +55,12 @@ function ThisQuestion(questionPicked) {
         option3.textContent = (question1[3]);
         option4.textContent = (question1[4]);
         console.log("It made it here YAY" + question1[0]);
+        
+        document.body.append(questionAsk);
+        document.body.append(option1);
+        document.body.append(option2);
+        document.body.append(option3);
+        document.body.append(option4);
 
     } else  if (questionPicked === 2) {
 
@@ -71,6 +77,12 @@ function ThisQuestion(questionPicked) {
         option4.textContent = (question2[4]);
         console.log("It made it here YAY" + question2[0]);
 
+        document.body.append(questionAsk);
+        document.body.append(option1);
+        document.body.append(option2);
+        document.body.append(option3);
+        document.body.append(option4);
+
     } else  if (questionPicked === 3) {
 
         var questionAsk = document.createElement("p");
@@ -86,6 +98,12 @@ function ThisQuestion(questionPicked) {
         option4.textContent = (question3[4]);
         console.log("It made it here YAY" + question3[0]);
 
+        document.body.append(questionAsk);
+        document.body.append(option1);
+        document.body.append(option2);
+        document.body.append(option3);
+        document.body.append(option4);
+
     } else  if (questionPicked === 4) {
 
         var questionAsk = document.createElement("p");
@@ -100,8 +118,36 @@ function ThisQuestion(questionPicked) {
         option3.textContent = (question4[3]);
         option4.textContent = (question4[4]);
         console.log("It made it here YAY" + question4[0]);
+
+        document.body.append(questionAsk);
+        document.body.append(option1);
+        document.body.append(option2);
+        document.body.append(option3);
+        document.body.append(option4);
+        
+    } else if (questionPicked === 5) {
+
+        var questionAsk = document.createElement("p");
+        var option1 = document.createElement("button");
+        var option2 = document.createElement("button");
+        var option3 = document.createElement("button");
+        var option4 = document.createElement("button");
+
+        questionAsk.textContent = (question5[0]);
+        option1.textContent = (question5[1]);
+        option2.textContent = (question5[2]);
+        option3.textContent = (question5[3]);
+        option4.textContent = (question5[4]);
+
+        document.body.append(questionAsk);
+        document.body.append(option1);
+        document.body.append(option2);
+        document.body.append(option3);
+        document.body.append(option4);
+
+        console.log("It made it here YAY" + question5[0]);
     }
-}
+} 
     var questionOrder = [1,2,3,4,5];
 function whichQuestion() {
 while (questionOrder.length > 0) {
