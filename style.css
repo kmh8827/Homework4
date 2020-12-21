@@ -8,3 +8,10 @@
 .navbar-brand {
     color:white;
   }
+.btn {
+  width: 60%;
+  margin: 0 0 5px 10px;
+}
+  #correct {
+    background-color: yellow;
+  }

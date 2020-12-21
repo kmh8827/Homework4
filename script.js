@@ -1,31 +1,20 @@
 var startButton = document.createElement("button");
+var makeChoice = document.getElementById("container");
+var questionAsk = document.createElement("h2");
+var option1 = document.createElement("button");
+var option2 = document.createElement("button");
+var option3 = document.createElement("button");
+var option4 = document.createElement("button"); 
 
-startButton.textContent = "Start The Quiz, REMEMBER You only have 60 seconds";
-document.body.append(startButton);
+var score = 0;
+var questions = [];
 
 startButton.setAttribute("class","btn btn-primary btn-lg btn-block");
-startButton.setAttribute("style","width: 60%;margin: 0 0 5px 5px");
+startButton.setAttribute("style","width: 80%;margin: 0 10% 10px 10%");
+startButton.textContent = "Start The Quiz, REMEMBER You only have 60 seconds";
 
-startButton.onclick = function() {timer()};
+document.getElementById("container").append(startButton);
 
-function timer() {
-
-    // document.body.append(timeLeft);
-    var time = 59;
-    var timeLeft = document.getElementById("timer");
-    myTimer = setInterval(function() {
-        if(time <= 0) {
-            alert("TIME'S UP");
-            clearInterval(myTimer);
-        } else {
-        timeLeft.innerHTML = time;
-        time --;
-        console.log(time);
-        }
-    }, 1000);
-}
-
-var questions = [];
 
 // //List of Questions that can appear on the quiz
 var question1 = [
@@ -67,74 +56,51 @@ var question5 = [
 //Creates buttons, styles buttons and pushes content to buttons
 function ThisQuestion(questionPicked) {
     questionPicked = parseInt(questionPicked);
-
-    var questionAsk = document.createElement("h2");
-    var option1 = document.createElement("button");
-    var option2 = document.createElement("button");
-    var option3 = document.createElement("button");
-    var option4 = document.createElement("button"); 
-
-    option1.setAttribute("class","btn btn-primary btn-lg btn-block");
-    option1.setAttribute("style","width: 60%;margin: 0 0 5px 5px");
-    option2.setAttribute("class","btn btn-primary btn-lg btn-block");
-    option2.setAttribute("style","width: 60%;margin: 0 0 5px 5px");
-    option3.setAttribute("class","btn btn-primary btn-lg btn-block");
-    option3.setAttribute("style","width: 60%;margin: 0 0 5px 5px");
-    option4.setAttribute("class","btn btn-primary btn-lg btn-block");
-    option4.setAttribute("style","width: 60%;margin: 0 0 5px 5px");
-
     if (questionPicked === 1) {
-
         questionAsk.textContent = (question1[0]);
         option1.textContent = (question1[1]);
         option2.textContent = (question1[2]);
         option3.textContent = (question1[3]);
         option4.textContent = (question1[4]);
-
+        option2.value = "correct";
     } else  if (questionPicked === 2) {
-
         questionAsk.textContent = (question2[0]);
         option1.textContent = (question2[1]);
         option2.textContent = (question2[2]);
         option3.textContent = (question2[3]);
         option4.textContent = (question2[4]);
-
+        option1.value = "correct";
     } else  if (questionPicked === 3) {
-
         questionAsk.textContent = (question3[0]);
         option1.textContent = (question3[1]);
         option2.textContent = (question3[2]);
         option3.textContent = (question3[3]);
         option4.textContent = (question3[4]);
-
+        option3.value = "correct";
+        console.log(option1);
+        console.log(option2);
     } else  if (questionPicked === 4) {
-
         questionAsk.textContent = (question4[0]);
         option1.textContent = (question4[1]);
         option2.textContent = (question4[2]);
         option3.textContent = (question4[3]);
         option4.textContent = (question4[4]);
-
+        option3.value = "correct";
     } else if (questionPicked === 5) {
-
         questionAsk.textContent = (question5[0]);
         option1.textContent = (question5[1]);
         option2.textContent = (question5[2]);
         option3.textContent = (question5[3]);
         option4.textContent = (question5[4]);
+        option4.value = "correct";
     }
-
-    document.body.append(questionAsk);
-    document.body.append(option1);
-    document.body.append(option2);
-    document.body.append(option3);
-    document.body.append(option4);
 } 
-
-    var questionOrder = [1,2,3,4,5];
 
 //Randomly Selects the question to use
 function whichQuestion() {
+
+    var questionOrder = [1,2,3,4,5];
+
 while (questionOrder.length > 0) {
     var index = Math.floor(Math.random() * (questionOrder.length));
     // console.log(index);
@@ -144,9 +110,38 @@ while (questionOrder.length > 0) {
     }
 }
 
-whichQuestion();
+startButton.onclick = function() {timer(); whichQuestion(); sendQuestions()};
+
+function timer() {
+    startButton.parentNode.removeChild(startButton);
+    
+    var time = 59;
+    var timeLeft = document.getElementById("timer");
+    myTimer = setInterval(function() {
+        if(time < 0) {
+            alert("TIME'S UP");
+            clearInterval(myTimer);
+        } else {
+        timeLeft.innerHTML = time;
+        time --;
+        }
+    }, 1000);
+}
 
 //Figures out which code to question to push to buttons
+function sendQuestions() {
+
+option1.setAttribute("class","btn btn-primary btn-lg btn-block");
+option2.setAttribute("class","btn btn-primary btn-lg btn-block");
+option3.setAttribute("class","btn btn-primary btn-lg btn-block");
+option4.setAttribute("class","btn btn-primary btn-lg btn-block");
+
+document.getElementById("inside").append(questionAsk);
+document.getElementById("inside").append(option1);
+document.getElementById("inside").append(option2);
+document.getElementById("inside").append(option3);
+document.getElementById("inside").append(option4);
+
 for (var i = 0; i < questions.length; i++)
 {
     if (questions[i] === 1) {
@@ -164,4 +159,5 @@ for (var i = 0; i < questions.length; i++)
     else if (questions[i] === 5) {
         ThisQuestion(questions[i]);
     }
+}
 }
