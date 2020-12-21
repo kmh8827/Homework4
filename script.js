@@ -1,7 +1,6 @@
 var startButton = document.createElement("button");
-var timeLeft = document.createElement("p");
-startButton.textContent = "Start The Quiz, REMEMBER You only have 60 seconds";
 
+startButton.textContent = "Start The Quiz, REMEMBER You only have 60 seconds";
 document.body.append(startButton);
 
 startButton.setAttribute("class","btn btn-primary btn-lg btn-block");
@@ -11,33 +10,20 @@ startButton.onclick = function() {timer()};
 
 function timer() {
 
-    document.body.append(timeLeft);
-    var time = 5;
+    // document.body.append(timeLeft);
+    var time = 59;
+    var timeLeft = document.getElementById("timer");
     myTimer = setInterval(function() {
-        if(time < 0) {
-            var finished = document.createElement("p");
-            finished.textContent = "TIME'S UP";
-            document.body.append(finished);
+        if(time <= 0) {
+            alert("TIME'S UP");
             clearInterval(myTimer);
         } else {
-        timeLeft.textContent = "You have " + time;
+        timeLeft.innerHTML = time;
         time --;
+        console.log(time);
         }
     }, 1000);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 var questions = [];
 
