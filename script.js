@@ -1,3 +1,44 @@
+var startButton = document.createElement("button");
+var timeLeft = document.createElement("p");
+startButton.textContent = "Start The Quiz, REMEMBER You only have 60 seconds";
+
+document.body.append(startButton);
+
+startButton.setAttribute("class","btn btn-primary btn-lg btn-block");
+startButton.setAttribute("style","width: 60%;margin: 0 0 5px 5px");
+
+startButton.onclick = function() {timer()};
+
+function timer() {
+
+    document.body.append(timeLeft);
+    var time = 5;
+    myTimer = setInterval(function() {
+        if(time < 0) {
+            var finished = document.createElement("p");
+            finished.textContent = "TIME'S UP";
+            document.body.append(finished);
+            clearInterval(myTimer);
+        } else {
+        timeLeft.textContent = "You have " + time;
+        time --;
+        }
+    }, 1000);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var questions = [];
 
 // //List of Questions that can appear on the quiz
@@ -45,7 +86,7 @@ function ThisQuestion(questionPicked) {
     var option1 = document.createElement("button");
     var option2 = document.createElement("button");
     var option3 = document.createElement("button");
-    var option4 = document.createElement("button");
+    var option4 = document.createElement("button"); 
 
     option1.setAttribute("class","btn btn-primary btn-lg btn-block");
     option1.setAttribute("style","width: 60%;margin: 0 0 5px 5px");
