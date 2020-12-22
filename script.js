@@ -6,6 +6,7 @@ var option2 = document.createElement("button");
 var option3 = document.createElement("button");
 var option4 = document.createElement("button");
 var lock = false;
+var counter = 0;
 
 var score = 0;
 var questions = [];
@@ -78,31 +79,12 @@ function timer() {
         if (time < 0) {
             alert("TIME'S UP");
             clearInterval(myTimer);
+            exitQuiz();
         } else {
             timeLeft.innerHTML = time;
             time--;
         }
     }, 1000);
-}
-
-function addScore() {
-
-    var exit = false;
-
-    makeChoice.addEventListener("click", function (event) {
-        while (exit === false) {
-            if (event.target.matches("button")) {
-                if (event.value === "correct") {
-                    exit = true;
-                    score += 100;
-                    console.log(score, typeof exit);
-                }
-                else if (event.target.matches("button")) {
-                    exit = true;
-                }
-            }
-        }
-    });
 }
 
 function ThisQuestion(questionPicked) {
@@ -117,7 +99,7 @@ function ThisQuestion(questionPicked) {
         option4.textContent = (question1[4]);
         option2.value = "correct";
         console.log("1");
-        addScore();
+        
 
     } else if (questionPicked === 2) {
         questionAsk.textContent = (question2[0]);
@@ -127,7 +109,7 @@ function ThisQuestion(questionPicked) {
         option4.textContent = (question2[4]);
         option1.value = "correct";
         console.log("2");
-        addScore();
+     
     } else if (questionPicked === 3) {
         questionAsk.textContent = (question3[0]);
         option1.textContent = (question3[1]);
@@ -136,7 +118,7 @@ function ThisQuestion(questionPicked) {
         option4.textContent = (question3[4]);
         option3.value = "correct";
         console.log("3");
-        addScore();
+      
     } else if (questionPicked === 4) {
         questionAsk.textContent = (question4[0]);
         option1.textContent = (question4[1]);
@@ -145,7 +127,7 @@ function ThisQuestion(questionPicked) {
         option4.textContent = (question4[4]);
         option3.value = "correct";
         console.log("4");
-        addScore();
+    
     } else if (questionPicked === 5) {
         questionAsk.textContent = (question5[0]);
         option1.textContent = (question5[1]);
@@ -154,27 +136,37 @@ function ThisQuestion(questionPicked) {
         option4.textContent = (question5[4]);
         option4.value = "correct";
         console.log("5");
-        addScore();
+       
     }
 
 }
 
 //Figures out which code to question to push to buttons
 function sendQuestions() {
-
-    option1.setAttribute("class", "btn btn-primary btn-lg btn-block");
-    option2.setAttribute("class", "btn btn-primary btn-lg btn-block");
-    option3.setAttribute("class", "btn btn-primary btn-lg btn-block");
-    option4.setAttribute("class", "btn btn-primary btn-lg btn-block");
-
+    option1.setAttribute("class", "btn btn-primary btn-lg btn-block question");
+    option2.setAttribute("class", "btn btn-primary btn-lg btn-block question");
+    option3.setAttribute("class", "btn btn-primary btn-lg btn-block question");
+    option4.setAttribute("class", "btn btn-primary btn-lg btn-block question");
+    // I added a function click to the page element-----------------------
+    option1.setAttribute("onclick", "sendQuestions()");
+    option2.setAttribute("onclick", "sendQuestions()");
+    option3.setAttribute("onclick", "sendQuestions()");
+    option4.setAttribute("onclick", "sendQuestions()");
     document.getElementById("inside").append(questionAsk);
     document.getElementById("inside").append(option1);
     document.getElementById("inside").append(option2);
     document.getElementById("inside").append(option3);
     document.getElementById("inside").append(option4);
+    // And counter to add the questions in per click------------------------
+    ThisQuestion(questions[counter]);
+    counter++;
+    console.log(counter);
 
-    for (var i = 0; i < questions.length; i++) {
-        ThisQuestion(questions[i]);
+    if (counter > 5) {
+        exitQuiz();
     }
-}
+  }
 
+function exitQuiz() {
+
+}
