@@ -12,6 +12,12 @@
   width: 60%;
   margin: 0 0 5px 10px;
 }
+.finishedQuiz {
+  text-align: center;
+}
+.enterName {
+  text-align: center;
+}
   #correct {
     background-color: yellow;
   }

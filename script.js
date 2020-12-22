@@ -1,22 +1,26 @@
 var startButton = document.createElement("button");
 var makeChoice = document.getElementById("container");
 var questionAsk = document.createElement("h2");
+var highScore = document.getElementById("high-score");
 var option1 = document.createElement("button");
 var option2 = document.createElement("button");
 var option3 = document.createElement("button");
 var option4 = document.createElement("button");
-var lock = false;
 var counter = 0;
+
 
 var score = 0;
 var questions = [];
+
+highScore.onclick = function() {
+    exitQuiz();
+}
 
 startButton.setAttribute("class", "btn btn-primary btn-lg btn-block");
 startButton.setAttribute("style", "width: 80%;margin: 0 10% 10px 10%");
 startButton.textContent = "Start The Quiz, REMEMBER You only have 60 seconds";
 
 document.getElementById("container").append(startButton);
-
 
 // //List of Questions that can appear on the quiz
 var question1 = [
@@ -98,7 +102,6 @@ function ThisQuestion(questionPicked) {
         option3.textContent = (question1[3]);
         option4.textContent = (question1[4]);
         option2.value = "correct";
-        console.log("1");
         
 
     } else if (questionPicked === 2) {
@@ -108,7 +111,6 @@ function ThisQuestion(questionPicked) {
         option3.textContent = (question2[3]);
         option4.textContent = (question2[4]);
         option1.value = "correct";
-        console.log("2");
      
     } else if (questionPicked === 3) {
         questionAsk.textContent = (question3[0]);
@@ -117,7 +119,6 @@ function ThisQuestion(questionPicked) {
         option3.textContent = (question3[3]);
         option4.textContent = (question3[4]);
         option3.value = "correct";
-        console.log("3");
       
     } else if (questionPicked === 4) {
         questionAsk.textContent = (question4[0]);
@@ -126,7 +127,6 @@ function ThisQuestion(questionPicked) {
         option3.textContent = (question4[3]);
         option4.textContent = (question4[4]);
         option3.value = "correct";
-        console.log("4");
     
     } else if (questionPicked === 5) {
         questionAsk.textContent = (question5[0]);
@@ -135,8 +135,6 @@ function ThisQuestion(questionPicked) {
         option3.textContent = (question5[3]);
         option4.textContent = (question5[4]);
         option4.value = "correct";
-        console.log("5");
-       
     }
 
 }
@@ -147,17 +145,18 @@ function sendQuestions() {
     option2.setAttribute("class", "btn btn-primary btn-lg btn-block question");
     option3.setAttribute("class", "btn btn-primary btn-lg btn-block question");
     option4.setAttribute("class", "btn btn-primary btn-lg btn-block question");
-    // I added a function click to the page element-----------------------
+    
     option1.setAttribute("onclick", "sendQuestions()");
     option2.setAttribute("onclick", "sendQuestions()");
     option3.setAttribute("onclick", "sendQuestions()");
     option4.setAttribute("onclick", "sendQuestions()");
+
     document.getElementById("inside").append(questionAsk);
     document.getElementById("inside").append(option1);
     document.getElementById("inside").append(option2);
     document.getElementById("inside").append(option3);
     document.getElementById("inside").append(option4);
-    // And counter to add the questions in per click------------------------
+    
     ThisQuestion(questions[counter]);
     counter++;
     console.log(counter);
@@ -168,5 +167,30 @@ function sendQuestions() {
   }
 
 function exitQuiz() {
+    document.body.innerHTML = "";
+    var finished = document.createElement("h2");
+    var enterName = document.createElement("form");
+    var createInput = document.createElement("input");
+    var createSubmit = document.createElement("input");
+    var emptySpace = document.createElement("br");
 
+    finished.setAttribute("class","finishedQuiz")
+    finished.textContent = "QUIZ FINISHED! Your score was " + score + "!";
+    document.body.append(finished);
+  
+    createSubmit.setAttribute("type","submit");
+    createInput.setAttribute("type","text");
+    enterName.setAttribute("class","enterName")
+    enterName.setAttribute("type","text");
+    enterName.textContent = "Enter your initials here!";
+    
+    enterName.appendChild(createInput);
+    enterName.appendChild(createSubmit);
+    document.body.append(enterName);
+    enterName.onsubmit = function() {highScoreList()};
 }
+
+// function highScoreList() {
+//     document.body.innerHTML = "";
+//     localStorage.setItem()
+// }
