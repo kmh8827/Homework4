@@ -7,10 +7,13 @@ var option2 = document.createElement("button");
 var option3 = document.createElement("button");
 var option4 = document.createElement("button");
 var counter = 0;
-
+var nameOfUser = "";
 
 var score = 0;
 var questions = [];
+var listOfNames = [];
+var listOfScores = [];
+console.log(listOfNames.length);
 
 highScore.onclick = function() {
     exitQuiz();
@@ -172,7 +175,7 @@ function exitQuiz() {
     var enterName = document.createElement("form");
     var createInput = document.createElement("input");
     var createSubmit = document.createElement("input");
-    var emptySpace = document.createElement("br");
+    
 
     finished.setAttribute("class","finishedQuiz")
     finished.textContent = "QUIZ FINISHED! Your score was " + score + "!";
@@ -180,17 +183,65 @@ function exitQuiz() {
   
     createSubmit.setAttribute("type","submit");
     createInput.setAttribute("type","text");
+    createInput.setAttribute("id","newName");
+    createInput.setAttribute("placeholder","Enter your initials here!");
+    createInput.value = "";
+
     enterName.setAttribute("class","enterName")
     enterName.setAttribute("type","text");
-    enterName.textContent = "Enter your initials here!";
     
     enterName.appendChild(createInput);
     enterName.appendChild(createSubmit);
     document.body.append(enterName);
-    enterName.onsubmit = function() {highScoreList()};
+    
+    fromStorage();
+
+    //On submission of User's Name
+    enterName.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    var nameOfUser = document.getElementById("newName").value;
+
+    listOfNames.push(nameOfUser);
+    nameOfUser.value = "";
+    listOfScores.push(score);
+    score = 0;
+    nameOfUser.value = "";
+
+    storeScores();
+    renderScores();
+
+    });
 }
 
-// function highScoreList() {
-//     document.body.innerHTML = "";
-//     localStorage.setItem()
-// }
+function renderScores() {
+    //document.body.innerHTML = "";
+
+    for (var i = 0; i<listOfNames.length;i++) {
+        console.log(listOfNames.length);
+        var listName = document.createElement("li");
+        listName.setAttribute("class","listOfNames");
+        listName.textContent = "The user " + listOfNames[i] + " got a score of " + listOfScores[i];
+
+        document.body.append(listName);
+    }
+}
+
+function fromStorage() {
+
+    var storedNames = JSON.parse(localStorage.getItem("names"));
+    var storedScores = JSON.parse(localStorage.getItem("scores"));
+
+    if (storedNames && storedScores) {
+        listOfNames = storedNames;
+        listOfScores = storedScores;
+    }
+
+    renderScores();
+
+}
+
+function storeScores() {
+    localStorage.setItem("names", JSON.stringify(listOfNames));
+    localStorage.setItem("scores", JSON.stringify(listOfScores));
+}
