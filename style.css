@@ -9,8 +9,9 @@
     color:white;
   }
 .btn {
-  width: 60%;
-  margin: 0 0 5px 10px;
+  width: 80%;
+  margin: 0 10% 10px 10%;
+  
 }
 .finishedQuiz {
   text-align: center;
@@ -18,6 +19,20 @@
 .enterName {
   text-align: center;
 }
-  #correct {
+#correct {
     background-color: yellow;
   }
+.listOfNames {
+  text-align: center;
+}
+body {
+  background-color: lightgoldenrodyellow;
+}
+.resetButton {
+  display: block;
+  width: 25%;
+  margin: 10px auto 10px;
+}
+.question {
+  text-align: center;
+}

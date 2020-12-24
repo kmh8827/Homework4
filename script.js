@@ -13,14 +13,14 @@ var score = 0;
 var questions = [];
 var listOfNames = [];
 var listOfScores = [];
-console.log(listOfNames.length);
 
 highScore.onclick = function() {
-    exitQuiz();
+    renderScores();
 }
 
+fromStorage();
+
 startButton.setAttribute("class", "btn btn-primary btn-lg btn-block");
-startButton.setAttribute("style", "width: 80%;margin: 0 10% 10px 10%");
 startButton.textContent = "Start The Quiz, REMEMBER You only have 60 seconds";
 
 document.getElementById("container").append(startButton);
@@ -144,6 +144,7 @@ function ThisQuestion(questionPicked) {
 
 //Figures out which code to question to push to buttons
 function sendQuestions() {
+    questionAsk.setAttribute("class","question");
     option1.setAttribute("class", "btn btn-primary btn-lg btn-block question");
     option2.setAttribute("class", "btn btn-primary btn-lg btn-block question");
     option3.setAttribute("class", "btn btn-primary btn-lg btn-block question");
@@ -194,10 +195,10 @@ function exitQuiz() {
     enterName.appendChild(createSubmit);
     document.body.append(enterName);
     
-    fromStorage();
 
     //On submission of User's Name
     enterName.addEventListener("submit", function(event) {
+    
     event.preventDefault();
 
     var nameOfUser = document.getElementById("newName").value;
@@ -215,11 +216,22 @@ function exitQuiz() {
 }
 
 function renderScores() {
-    //document.body.innerHTML = "";
+
+    document.body.innerHTML = "";
+
+    var resetButton = document.createElement("button");
+    resetButton.textContent = "Reset High Scores";
+    resetButton.setAttribute("class","btn btn-secondary resetButton");
+    resetButton.onclick = function() {
+        document.body.innerHTML = "";
+        localStorage.clear();
+        document.body.append(resetButton);
+    };
+
+    document.body.append(resetButton);
 
     for (var i = 0; i<listOfNames.length;i++) {
-        console.log(listOfNames.length);
-        var listName = document.createElement("li");
+        var listName = document.createElement("P");
         listName.setAttribute("class","listOfNames");
         listName.textContent = "The user " + listOfNames[i] + " got a score of " + listOfScores[i];
 
@@ -228,7 +240,6 @@ function renderScores() {
 }
 
 function fromStorage() {
-
     var storedNames = JSON.parse(localStorage.getItem("names"));
     var storedScores = JSON.parse(localStorage.getItem("scores"));
 
@@ -236,8 +247,6 @@ function fromStorage() {
         listOfNames = storedNames;
         listOfScores = storedScores;
     }
-
-    renderScores();
 
 }
 
