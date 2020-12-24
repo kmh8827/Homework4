@@ -9,6 +9,7 @@ var option4 = document.createElement("button");
 var counter = 0;
 var time = 59;
 var nameOfUser = "";
+var lock = false;
 
 var score = 0;
 var questions = [];
@@ -51,9 +52,9 @@ var question3 = [
 var question4 = [
     "What is the difference between a global variable and a local variable in Javascript?",
     "A global variable always has the same value",
-    "A global variable is only usable in certain areas while a global variable is usable everywhere",
+    "A global variable is only usable in certain areas while a local variable is usable everywhere",
     "local variables are outside of functions while global variables are inside of functions",
-    "a global variable appears before all other scripts so it can be accessed anywhere while local variables are not"
+    "a global variable appears before all other scripts so it can be accessed anywhere while local variables are cannot be used anywhere"
 ];
 var question5 = [
     "What is the appropriate way to generate a random number between 0 and 5",
@@ -82,7 +83,7 @@ function timer() {
     startButton.parentNode.removeChild(startButton);
     var timeLeft = document.getElementById("timer");
     myTimer = setInterval(function () {
-        if (time < 0) {
+        if (time < 0 && lock === false) {
             alert("TIME'S UP");
             clearInterval(myTimer);
             exitQuiz();
@@ -172,6 +173,7 @@ function addPoints() {
 }
 
 function exitQuiz() {
+    lock = true;
     document.body.innerHTML = "";
     var finished = document.createElement("h2");
     var enterName = document.createElement("form");
