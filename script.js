@@ -7,6 +7,7 @@ var option2 = document.createElement("button");
 var option3 = document.createElement("button");
 var option4 = document.createElement("button");
 var counter = 0;
+var time = 59;
 var nameOfUser = "";
 
 var score = 0;
@@ -79,8 +80,6 @@ startButton.onclick = function () { timer(); whichQuestion(); sendQuestions() };
 
 function timer() {
     startButton.parentNode.removeChild(startButton);
-
-    var time = 59;
     var timeLeft = document.getElementById("timer");
     myTimer = setInterval(function () {
         if (time < 0) {
@@ -104,7 +103,7 @@ function ThisQuestion(questionPicked) {
         option2.textContent = (question1[2]);
         option3.textContent = (question1[3]);
         option4.textContent = (question1[4]);
-        option2.value = "correct";
+        option2.setAttribute("onclick","addPoints(); sendQuestions()");
         
 
     } else if (questionPicked === 2) {
@@ -113,7 +112,7 @@ function ThisQuestion(questionPicked) {
         option2.textContent = (question2[2]);
         option3.textContent = (question2[3]);
         option4.textContent = (question2[4]);
-        option1.value = "correct";
+        option1.setAttribute("onclick","addPoints(); sendQuestions()");
      
     } else if (questionPicked === 3) {
         questionAsk.textContent = (question3[0]);
@@ -121,7 +120,7 @@ function ThisQuestion(questionPicked) {
         option2.textContent = (question3[2]);
         option3.textContent = (question3[3]);
         option4.textContent = (question3[4]);
-        option3.value = "correct";
+        option1.setAttribute("onclick","addPoints(); sendQuestions()");
       
     } else if (questionPicked === 4) {
         questionAsk.textContent = (question4[0]);
@@ -129,7 +128,7 @@ function ThisQuestion(questionPicked) {
         option2.textContent = (question4[2]);
         option3.textContent = (question4[3]);
         option4.textContent = (question4[4]);
-        option3.value = "correct";
+        option4.setAttribute("onclick","addPoints(); sendQuestions()");
     
     } else if (questionPicked === 5) {
         questionAsk.textContent = (question5[0]);
@@ -137,9 +136,8 @@ function ThisQuestion(questionPicked) {
         option2.textContent = (question5[2]);
         option3.textContent = (question5[3]);
         option4.textContent = (question5[4]);
-        option4.value = "correct";
+        option3.setAttribute("onclick","addPoints(); sendQuestions()");
     }
-
 }
 
 //Figures out which code to question to push to buttons
@@ -163,12 +161,15 @@ function sendQuestions() {
     
     ThisQuestion(questions[counter]);
     counter++;
-    console.log(counter);
 
     if (counter > 5) {
         exitQuiz();
     }
   }
+
+function addPoints() {
+    score += 100;
+}
 
 function exitQuiz() {
     document.body.innerHTML = "";
@@ -178,7 +179,7 @@ function exitQuiz() {
     var createSubmit = document.createElement("input");
     
 
-    finished.setAttribute("class","finishedQuiz")
+    finished.setAttribute("class","finishedQuiz");
     finished.textContent = "QUIZ FINISHED! Your score was " + score + "!";
     document.body.append(finished);
   
@@ -211,7 +212,6 @@ function exitQuiz() {
 
     storeScores();
     renderScores();
-
     });
 }
 
@@ -247,7 +247,6 @@ function fromStorage() {
         listOfNames = storedNames;
         listOfScores = storedScores;
     }
-
 }
 
 function storeScores() {
