@@ -11,7 +11,6 @@ var time = 59;
 var nameOfUser = "";
 var lock = false;
 
-var score = 0;
 var questions = [];
 var listOfNames = [];
 var listOfScores = [];
@@ -104,7 +103,10 @@ function ThisQuestion(questionPicked) {
         option2.textContent = (question1[2]);
         option3.textContent = (question1[3]);
         option4.textContent = (question1[4]);
-        option2.setAttribute("onclick","addPoints(); sendQuestions()");
+        option1.setAttribute("onclick","wrong(); sendQuestions()");
+        option2.setAttribute("onclick","correct(); sendQuestions()");
+        option3.setAttribute("onclick","wrong(); sendQuestions()");
+        option4.setAttribute("onclick","wrong(); sendQuestions()");
         
 
     } else if (questionPicked === 2) {
@@ -113,7 +115,10 @@ function ThisQuestion(questionPicked) {
         option2.textContent = (question2[2]);
         option3.textContent = (question2[3]);
         option4.textContent = (question2[4]);
-        option1.setAttribute("onclick","addPoints(); sendQuestions()");
+        option1.setAttribute("onclick","correct(); sendQuestions()");
+        option2.setAttribute("onclick","wrong(); sendQuestions()");
+        option3.setAttribute("onclick","wrong(); sendQuestions()");
+        option4.setAttribute("onclick","wrong(); sendQuestions()");
      
     } else if (questionPicked === 3) {
         questionAsk.textContent = (question3[0]);
@@ -121,7 +126,10 @@ function ThisQuestion(questionPicked) {
         option2.textContent = (question3[2]);
         option3.textContent = (question3[3]);
         option4.textContent = (question3[4]);
-        option1.setAttribute("onclick","addPoints(); sendQuestions()");
+        option1.setAttribute("onclick","correct(); sendQuestions()");
+        option2.setAttribute("onclick","wrong(); sendQuestions()");
+        option3.setAttribute("onclick","wrong(); sendQuestions()");
+        option4.setAttribute("onclick","wrong(); sendQuestions()");
       
     } else if (questionPicked === 4) {
         questionAsk.textContent = (question4[0]);
@@ -129,7 +137,10 @@ function ThisQuestion(questionPicked) {
         option2.textContent = (question4[2]);
         option3.textContent = (question4[3]);
         option4.textContent = (question4[4]);
-        option4.setAttribute("onclick","addPoints(); sendQuestions()");
+        option1.setAttribute("onclick","wrong(); sendQuestions()");
+        option2.setAttribute("onclick","wrong(); sendQuestions()");
+        option3.setAttribute("onclick","wrong(); sendQuestions()");
+        option4.setAttribute("onclick","correct(); sendQuestions()");
     
     } else if (questionPicked === 5) {
         questionAsk.textContent = (question5[0]);
@@ -137,7 +148,10 @@ function ThisQuestion(questionPicked) {
         option2.textContent = (question5[2]);
         option3.textContent = (question5[3]);
         option4.textContent = (question5[4]);
-        option3.setAttribute("onclick","addPoints(); sendQuestions()");
+        option1.setAttribute("onclick","wrong(); sendQuestions()");
+        option2.setAttribute("onclick","wrong(); sendQuestions()");
+        option3.setAttribute("onclick","correct(); sendQuestions()");
+        option4.setAttribute("onclick","wrong(); sendQuestions()");
     }
 }
 
@@ -168,21 +182,44 @@ function sendQuestions() {
     }
   }
 
-function addPoints() {
-    score += 100;
+function correct() {
+    time = time;
+    var correctLine = document.createElement("hr");
+    var correctStatement = document.createElement("p");
+    correctStatement.textContent = "Correct!";
+    correctLine.setAttribute("class","correctLine");
+    correctStatement.setAttribute("class","correctStatement");
+    document.getElementById("rightOrWrong").appendChild(correctLine);
+    document.getElementById("rightOrWrong").appendChild(correctStatement);
+
+    setTimeout(function() {document.getElementById("rightOrWrong").innerHTML = "";}, 1000);
+
+}
+
+function wrong() {
+    time -= 10;
+    var wrongLine = document.createElement("hr");
+    var wrongStatement = document.createElement("p");
+    wrongStatement.textContent = "Incorrect!";
+    wrongLine.setAttribute("class","wrongLine");
+    wrongStatement.setAttribute("class","wrongStatement");
+    document.getElementById("rightOrWrong").appendChild(wrongLine);
+    document.getElementById("rightOrWrong").appendChild(wrongStatement);
+
+    setTimeout(function() {document.getElementById("rightOrWrong").innerHTML = "";}, 1000);
 }
 
 function exitQuiz() {
     lock = true;
+    var score = 0;
     document.body.innerHTML = "";
     var finished = document.createElement("h2");
     var enterName = document.createElement("form");
     var createInput = document.createElement("input");
     var createSubmit = document.createElement("input");
-    
 
     finished.setAttribute("class","finishedQuiz");
-    finished.textContent = "QUIZ FINISHED! Your score was " + score + "!";
+    finished.textContent = "QUIZ FINISHED! Your score was " + time + "!";
     document.body.append(finished);
   
     createSubmit.setAttribute("type","submit");
@@ -197,7 +234,7 @@ function exitQuiz() {
     enterName.appendChild(createInput);
     enterName.appendChild(createSubmit);
     document.body.append(enterName);
-    
+    score = time;
 
     //On submission of User's Name
     enterName.addEventListener("submit", function(event) {
@@ -208,8 +245,9 @@ function exitQuiz() {
 
     listOfNames.push(nameOfUser);
     nameOfUser.value = "";
+    
     listOfScores.push(score);
-    score = 0;
+    time = 0;
     nameOfUser.value = "";
 
     storeScores();

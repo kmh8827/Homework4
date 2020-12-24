@@ -36,3 +36,17 @@ body {
 .question {
   text-align: center;
 }
+.correctStatement {
+  text-align: center;
+  color: green;
+}
+.correctLine {
+  color: green;
+}
+.wrongLine {
+  color: red;
+}
+.wrongStatement {
+  text-align: center;
+  color: red;
+}
