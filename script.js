@@ -6,26 +6,28 @@ var option1 = document.createElement("button");
 var option2 = document.createElement("button");
 var option3 = document.createElement("button");
 var option4 = document.createElement("button");
-var counter = 0;
-var time = 59;
-var nameOfUser = "";
 var lock = false;
-
 var questions = [];
 var listOfNames = [];
 var listOfScores = [];
-
-highScore.onclick = function() {
+//allows user to go directly to highscore list
+highScore.onclick = function () {
     renderScores();
 }
 
 fromStorage();
 
+function start() {
+time=60;
+lock = false;
+counter = 0;
+document.getElementById("container").innerHTML = "";
 startButton.setAttribute("class", "btn btn-primary btn-lg btn-block");
 startButton.textContent = "Start The Quiz, REMEMBER You only have 60 seconds";
-
 document.getElementById("container").append(startButton);
-
+startButton.onclick = function () { timer(); whichQuestion(); sendQuestions() };
+}
+start();
 // //List of Questions that can appear on the quiz
 var question1 = [
     "If I want to convert the string 1.325 to a number what should I use?",
@@ -75,15 +77,16 @@ function whichQuestion() {
         questionOrder.splice(index, 1);
     }
 }
+//Starts the quiz
 
-startButton.onclick = function () { timer(); whichQuestion(); sendQuestions() };
-
+//Times how long the quiz will last
 function timer() {
+    time = 59;
     startButton.parentNode.removeChild(startButton);
     var timeLeft = document.getElementById("timer");
     myTimer = setInterval(function () {
-        if (time < 0 && lock === false) {
-            alert("TIME'S UP");
+        if (time < 0 || lock === true) {
+            alert("QUIZ OVER");
             clearInterval(myTimer);
             exitQuiz();
         } else {
@@ -92,7 +95,7 @@ function timer() {
         }
     }, 1000);
 }
-
+//sets the appropriate text and answer for each question
 function ThisQuestion(questionPicked) {
 
     questionPicked = parseInt(questionPicked);
@@ -103,11 +106,11 @@ function ThisQuestion(questionPicked) {
         option2.textContent = (question1[2]);
         option3.textContent = (question1[3]);
         option4.textContent = (question1[4]);
-        option1.setAttribute("onclick","wrong(); sendQuestions()");
-        option2.setAttribute("onclick","correct(); sendQuestions()");
-        option3.setAttribute("onclick","wrong(); sendQuestions()");
-        option4.setAttribute("onclick","wrong(); sendQuestions()");
-        
+        option1.setAttribute("onclick", "wrong(); sendQuestions()");
+        option2.setAttribute("onclick", "correct(); sendQuestions()");
+        option3.setAttribute("onclick", "wrong(); sendQuestions()");
+        option4.setAttribute("onclick", "wrong(); sendQuestions()");
+
 
     } else if (questionPicked === 2) {
         questionAsk.textContent = (question2[0]);
@@ -115,170 +118,181 @@ function ThisQuestion(questionPicked) {
         option2.textContent = (question2[2]);
         option3.textContent = (question2[3]);
         option4.textContent = (question2[4]);
-        option1.setAttribute("onclick","correct(); sendQuestions()");
-        option2.setAttribute("onclick","wrong(); sendQuestions()");
-        option3.setAttribute("onclick","wrong(); sendQuestions()");
-        option4.setAttribute("onclick","wrong(); sendQuestions()");
-     
+        option1.setAttribute("onclick", "correct(); sendQuestions()");
+        option2.setAttribute("onclick", "wrong(); sendQuestions()");
+        option3.setAttribute("onclick", "wrong(); sendQuestions()");
+        option4.setAttribute("onclick", "wrong(); sendQuestions()");
+
     } else if (questionPicked === 3) {
         questionAsk.textContent = (question3[0]);
         option1.textContent = (question3[1]);
         option2.textContent = (question3[2]);
         option3.textContent = (question3[3]);
         option4.textContent = (question3[4]);
-        option1.setAttribute("onclick","correct(); sendQuestions()");
-        option2.setAttribute("onclick","wrong(); sendQuestions()");
-        option3.setAttribute("onclick","wrong(); sendQuestions()");
-        option4.setAttribute("onclick","wrong(); sendQuestions()");
-      
+        option1.setAttribute("onclick", "correct(); sendQuestions()");
+        option2.setAttribute("onclick", "wrong(); sendQuestions()");
+        option3.setAttribute("onclick", "wrong(); sendQuestions()");
+        option4.setAttribute("onclick", "wrong(); sendQuestions()");
+
     } else if (questionPicked === 4) {
         questionAsk.textContent = (question4[0]);
         option1.textContent = (question4[1]);
         option2.textContent = (question4[2]);
         option3.textContent = (question4[3]);
         option4.textContent = (question4[4]);
-        option1.setAttribute("onclick","wrong(); sendQuestions()");
-        option2.setAttribute("onclick","wrong(); sendQuestions()");
-        option3.setAttribute("onclick","wrong(); sendQuestions()");
-        option4.setAttribute("onclick","correct(); sendQuestions()");
-    
+        option1.setAttribute("onclick", "wrong(); sendQuestions()");
+        option2.setAttribute("onclick", "wrong(); sendQuestions()");
+        option3.setAttribute("onclick", "wrong(); sendQuestions()");
+        option4.setAttribute("onclick", "correct(); sendQuestions()");
+
     } else if (questionPicked === 5) {
         questionAsk.textContent = (question5[0]);
         option1.textContent = (question5[1]);
         option2.textContent = (question5[2]);
         option3.textContent = (question5[3]);
         option4.textContent = (question5[4]);
-        option1.setAttribute("onclick","wrong(); sendQuestions()");
-        option2.setAttribute("onclick","wrong(); sendQuestions()");
-        option3.setAttribute("onclick","correct(); sendQuestions()");
-        option4.setAttribute("onclick","wrong(); sendQuestions()");
+        option1.setAttribute("onclick", "wrong(); sendQuestions()");
+        option2.setAttribute("onclick", "wrong(); sendQuestions()");
+        option3.setAttribute("onclick", "correct(); sendQuestions()");
+        option4.setAttribute("onclick", "wrong(); sendQuestions()");
     }
 }
 
-//Figures out which code to question to push to buttons
+//styles the buttons and loops them through the quiz
 function sendQuestions() {
-    questionAsk.setAttribute("class","question");
+    questionAsk.setAttribute("class", "question");
     option1.setAttribute("class", "btn btn-primary btn-lg btn-block question");
     option2.setAttribute("class", "btn btn-primary btn-lg btn-block question");
     option3.setAttribute("class", "btn btn-primary btn-lg btn-block question");
     option4.setAttribute("class", "btn btn-primary btn-lg btn-block question");
-    
+
     option1.setAttribute("onclick", "sendQuestions()");
     option2.setAttribute("onclick", "sendQuestions()");
     option3.setAttribute("onclick", "sendQuestions()");
     option4.setAttribute("onclick", "sendQuestions()");
 
-    document.getElementById("inside").append(questionAsk);
-    document.getElementById("inside").append(option1);
-    document.getElementById("inside").append(option2);
-    document.getElementById("inside").append(option3);
-    document.getElementById("inside").append(option4);
-    
+    document.getElementById("container").prepend(option4);
+    document.getElementById("container").prepend(option3);
+    document.getElementById("container").prepend(option2);
+    document.getElementById("container").prepend(option1);
+    document.getElementById("container").prepend(questionAsk);
+
     ThisQuestion(questions[counter]);
     counter++;
-
+    //exits the quiz after the last question
     if (counter > 5) {
         exitQuiz();
     }
-  }
-
+}
+//displays the correct text when the correct answer is chosen
 function correct() {
-    time = time;
+    var rightWrong = document.createElement("div");
+    rightWrong.setAttribute("id","rightOrWrong");
+    document.getElementById("container").append(rightWrong);
     var correctLine = document.createElement("hr");
     var correctStatement = document.createElement("p");
     correctStatement.textContent = "Correct!";
-    correctLine.setAttribute("class","correctLine");
-    correctStatement.setAttribute("class","correctStatement");
-    document.getElementById("rightOrWrong").appendChild(correctLine);
-    document.getElementById("rightOrWrong").appendChild(correctStatement);
+    correctLine.setAttribute("class", "correctLine");
+    correctStatement.setAttribute("class", "correctStatement");
+    document.getElementById("rightOrWrong").append(correctLine);
+    document.getElementById("rightOrWrong").append(correctStatement);
 
-    setTimeout(function() {document.getElementById("rightOrWrong").innerHTML = "";}, 1000);
+    setTimeout(function () { document.getElementById("rightOrWrong").innerHTML = ""; }, 1000);
 
 }
-
+//displays the wrong text when the wrong answer is chosen as well as subtracting time
 function wrong() {
-    time -= 10;
+    time -= 15;
+    var rightWrong = document.createElement("div");
+    rightWrong.setAttribute("id","rightOrWrong");
+    document.getElementById("container").append(rightWrong);
     var wrongLine = document.createElement("hr");
     var wrongStatement = document.createElement("p");
     wrongStatement.textContent = "Incorrect!";
-    wrongLine.setAttribute("class","wrongLine");
-    wrongStatement.setAttribute("class","wrongStatement");
+    wrongLine.setAttribute("class", "wrongLine");
+    wrongStatement.setAttribute("class", "wrongStatement");
     document.getElementById("rightOrWrong").appendChild(wrongLine);
     document.getElementById("rightOrWrong").appendChild(wrongStatement);
 
-    setTimeout(function() {document.getElementById("rightOrWrong").innerHTML = "";}, 1000);
+    setTimeout(function () { document.getElementById("rightOrWrong").innerHTML = ""; }, 1000);
 }
-
+//after answering all the questions or running out of time moves to display score and ask for user's name
 function exitQuiz() {
+    //lock stops the timer from pushing an alert if time runs out
     lock = true;
-    var score = 0;
-    document.body.innerHTML = "";
+    document.getElementById("container").innerHTML = "";
     var finished = document.createElement("h2");
     var enterName = document.createElement("form");
     var createInput = document.createElement("input");
     var createSubmit = document.createElement("input");
 
-    finished.setAttribute("class","finishedQuiz");
-    finished.textContent = "QUIZ FINISHED! Your score was " + time + "!";
-    document.body.append(finished);
-  
-    createSubmit.setAttribute("type","submit");
-    createInput.setAttribute("type","text");
-    createInput.setAttribute("id","newName");
-    createInput.setAttribute("placeholder","Enter your initials here!");
+    finished.setAttribute("class", "finishedQuiz");
+    finished.textContent = "QUIZ FINISHED! Your score was " + (time+1) + "!";
+    document.getElementById("container").append(finished);
+
+    createSubmit.setAttribute("type", "submit");
+    createInput.setAttribute("type", "text");
+    createInput.setAttribute("id", "newName");
+    createInput.setAttribute("placeholder", "Enter your initials here!");
     createInput.value = "";
 
-    enterName.setAttribute("class","enterName")
-    enterName.setAttribute("type","text");
-    
+    enterName.setAttribute("class", "enterName")
+    enterName.setAttribute("type", "text");
+
     enterName.appendChild(createInput);
     enterName.appendChild(createSubmit);
-    document.body.append(enterName);
-    score = time;
+    document.getElementById("container").append(enterName);
 
-    //On submission of User's Name
-    enterName.addEventListener("submit", function(event) {
-    
-    event.preventDefault();
+    //On submission of User's Name goes to high score area
+    enterName.addEventListener("submit", function (event) {
 
-    var nameOfUser = document.getElementById("newName").value;
+        event.preventDefault();
 
-    listOfNames.push(nameOfUser);
-    nameOfUser.value = "";
-    
-    listOfScores.push(score);
-    time = 0;
-    nameOfUser.value = "";
+        var nameOfUser = document.getElementById("newName").value;
 
-    storeScores();
-    renderScores();
+        listOfNames.push(nameOfUser);
+        nameOfUser.value = "";
+
+        listOfScores.push(time);
+        time = 0;
+        nameOfUser.value = "";
+
+        renderScores();
+        storeScores();
     });
 }
-
+//dispays the scores
 function renderScores() {
 
-    document.body.innerHTML = "";
-
+    document.getElementById("container").innerHTML = "";
+    //resets the highscore list
     var resetButton = document.createElement("button");
     resetButton.textContent = "Reset High Scores";
-    resetButton.setAttribute("class","btn btn-secondary resetButton");
-    resetButton.onclick = function() {
-        document.body.innerHTML = "";
+    resetButton.setAttribute("class", "btn btn-secondary resetButton");
+    resetButton.onclick = function () {
+        listName.textContent = "";
+        document.getElementById("container").append(listName);
         localStorage.clear();
-        document.body.append(resetButton);
     };
+    startButton.setAttribute("class", "btn btn-secondary resetButton");
+    startButton.setAttribute("onclick", "start()");
+    startButton.textContent = "Restart the Quiz";
+    document.getElementById("container").append(startButton);
+    document.getElementById("container").append(resetButton);
+    
+ 
+    //displays the high scores on the page
+    for (var i = 0; i < listOfNames.length; i++) {
 
-    document.body.append(resetButton);
-
-    for (var i = 0; i<listOfNames.length;i++) {
         var listName = document.createElement("P");
-        listName.setAttribute("class","listOfNames");
-        listName.textContent = "The user " + listOfNames[i] + " got a score of " + listOfScores[i];
+        listName.setAttribute("class", "listOfNames");
+        listName.textContent = listOfNames[i] + " got a score of " + listOfScores[i];
 
-        document.body.append(listName);
+        document.getElementById("container").append(listName);
     }
+        
 }
-
+//Get's the local storage Names and Scores
 function fromStorage() {
     var storedNames = JSON.parse(localStorage.getItem("names"));
     var storedScores = JSON.parse(localStorage.getItem("scores"));
@@ -288,7 +302,7 @@ function fromStorage() {
         listOfScores = storedScores;
     }
 }
-
+//Puts the name and score into the local storage
 function storeScores() {
     localStorage.setItem("names", JSON.stringify(listOfNames));
     localStorage.setItem("scores", JSON.stringify(listOfScores));

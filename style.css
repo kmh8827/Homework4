@@ -1,47 +1,44 @@
-.navbar-nav {
-    margin-left: auto;
-  }
-.timer {
-    margin-left: auto;
-    margin-right: auto;
+body {
+  background-color: lightgoldenrodyellow;
 }
-.navbar-brand {
-    color:white;
-  }
 .btn {
   width: 80%;
   margin: 0 10% 10px 10%;
   
 }
-.finishedQuiz {
+.correctLine {
+  color: green;
+}
+.correctStatement {
   text-align: center;
+  color: green;
 }
 .enterName {
   text-align: center;
 }
-#correct {
-    background-color: yellow;
-  }
+.finishedQuiz {
+  text-align: center;
+}
 .listOfNames {
   text-align: center;
 }
-body {
-  background-color: lightgoldenrodyellow;
+.navbar-brand {
+  color:white;
+}
+.navbar-nav {
+  margin-left: auto;
+}
+.question {
+  text-align: center;
 }
 .resetButton {
   display: block;
   width: 25%;
   margin: 10px auto 10px;
 }
-.question {
-  text-align: center;
-}
-.correctStatement {
-  text-align: center;
-  color: green;
-}
-.correctLine {
-  color: green;
+.timer {
+  margin-left: auto;
+  margin-right: auto;
 }
 .wrongLine {
   color: red;
