@@ -275,8 +275,9 @@ function renderScores() {
     resetButton.textContent = "Reset High Scores";
     resetButton.setAttribute("class", "btn btn-secondary resetButton");
     resetButton.onclick = function () {
-        listName.textContent = "";
-        document.getElementById("container").append(listName);
+        document.getElementById("container").innerHTML = "";
+        document.getElementById("container").append(startButton);
+        document.getElementById("container").append(resetButton);
         localStorage.clear();
     };
     startButton.setAttribute("class", "btn btn-secondary resetButton");
