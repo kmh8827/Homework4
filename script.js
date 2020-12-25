@@ -45,8 +45,8 @@ var question2 = [
 ];
 var question3 = [
     "What will array.push('pumpkin') do to the array vegetables['potato'];?",
-    "['potato','pumpkin'];",
-    "['potato pumpkin'];",
+    "['potato','pumpkin']",
+    "['potato pumpkin']",
     "['pumpkin','potato']",
     "['pumpkin potato']"
 ];
@@ -257,7 +257,7 @@ function exitQuiz() {
 
         listOfNames.push(nameOfUser);
         nameOfUser.value = "";
-
+        time ++;
         listOfScores.push(time);
         time = 0;
         nameOfUser.value = "";
