@@ -202,7 +202,12 @@ function correct() {
 }
 //displays the wrong text when the wrong answer is chosen as well as subtracting time
 function wrong() {
-    time -= 15;
+    if (time>15) {
+        time -= 15;
+    }
+    else {
+        time = -1;
+    }
     var rightWrong = document.createElement("div");
     rightWrong.setAttribute("id","rightOrWrong");
     document.getElementById("container").append(rightWrong);
