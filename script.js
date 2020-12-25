@@ -88,6 +88,12 @@ function timer() {
         if (time < 0 || lock === true) {
             alert("QUIZ OVER");
             clearInterval(myTimer);
+            if (time > 0) {
+                time++;
+            }
+            else {
+                time = 0
+            }
             exitQuiz();
         } else {
             timeLeft.innerHTML = time;
@@ -206,7 +212,7 @@ function wrong() {
         time -= 15;
     }
     else {
-        time = -1;
+        time = 0;
     }
     var rightWrong = document.createElement("div");
     rightWrong.setAttribute("id","rightOrWrong");
@@ -232,7 +238,8 @@ function exitQuiz() {
     var createSubmit = document.createElement("input");
 
     finished.setAttribute("class", "finishedQuiz");
-    finished.textContent = "QUIZ FINISHED! Your score was " + (time+1) + "!";
+    
+    finished.textContent = "QUIZ FINISHED! Your score was " + time + "!";
     document.getElementById("container").append(finished);
 
     createSubmit.setAttribute("type", "submit");
@@ -257,7 +264,8 @@ function exitQuiz() {
 
         listOfNames.push(nameOfUser);
         nameOfUser.value = "";
-        time ++;
+        console.log(time);
+        console.log(time);
         listOfScores.push(time);
         time = 0;
         nameOfUser.value = "";
@@ -292,7 +300,7 @@ function renderScores() {
 
         var listName = document.createElement("P");
         listName.setAttribute("class", "listOfNames");
-        listName.textContent = listOfNames[i] + " got a score of " + listOfScores[i];
+        listName.textContent = listOfNames[i] + " got a score of " + (listOfScores[i]);
 
         document.getElementById("container").append(listName);
     }
