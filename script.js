@@ -81,19 +81,18 @@ function whichQuestion() {
 
 //Times how long the quiz will last
 function timer() {
-    time = 59;
+    time = 60;
     startButton.parentNode.removeChild(startButton);
     var timeLeft = document.getElementById("timer");
     myTimer = setInterval(function () {
         if (time < 0 || lock === true) {
-            alert("QUIZ OVER");
-            clearInterval(myTimer);
             if (time > 0) {
                 time++;
             }
             else {
                 time = 0
             }
+            clearInterval(myTimer);
             exitQuiz();
         } else {
             timeLeft.innerHTML = time;
@@ -264,8 +263,6 @@ function exitQuiz() {
 
         listOfNames.push(nameOfUser);
         nameOfUser.value = "";
-        console.log(time);
-        console.log(time);
         listOfScores.push(time);
         time = 0;
         nameOfUser.value = "";
@@ -284,6 +281,8 @@ function renderScores() {
     resetButton.setAttribute("class", "btn btn-secondary resetButton");
     resetButton.onclick = function () {
         document.getElementById("container").innerHTML = "";
+        listOfNames = [];
+        listOfScores = [];
         document.getElementById("container").append(startButton);
         document.getElementById("container").append(resetButton);
         localStorage.clear();
